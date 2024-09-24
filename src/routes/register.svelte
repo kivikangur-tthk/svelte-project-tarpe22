@@ -5,16 +5,16 @@
 
     const { session } = stores();
 
-    let username = '';
-    let email = '';
-    let password = '';
-    let errors = null;
+    let username = 'mina';
+    let email = 'mina@ho.me';
+    let password = 'MinuParool';
+    let error = null;
 
     async function submit(event) {
         const response = await post(`auth/register`, { username, email, password });
 
-        // TODO handle network errors
-        errors = response.errors;
+
+        error = response.error;
 
         if (response.user) {
             $session.user = response.user;
@@ -36,9 +36,9 @@
                     <a href="/login">Have an account?</a>
                 </p>
 
-                {#if (errors)}
-                    <div class="alert alert-error">
-                        {errors}
+                {#if error}
+                    <div class="alert alert-danger">
+                        {error}
                     </div>
                 {/if}
 
