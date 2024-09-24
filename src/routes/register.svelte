@@ -5,20 +5,20 @@
 
     const { session } = stores();
 
-    let username = 'mina';
-    let email = 'mina@ho.me';
+    let name = 'mina';
+    let username = 'mina@ho.me';
     let password = 'MinuParool';
     let error = null;
 
     async function submit(event) {
-        const response = await post(`auth/register`, { username, email, password });
+        const response = await post(`auth/register`, { username, name, password });
 
-
+        console.log("Submit response: ",response);
         error = response.error;
 
         if (response.user) {
             $session.user = response.user;
-            goto('/');
+            await goto('/login', {});
         }
     }
 </script>
@@ -45,10 +45,10 @@
                 <form on:submit|preventDefault={submit}>
                     <fieldset>
                         <div class="mt-2 form-group">
-                            <input class="form-control form-control-lg" type="text" required placeholder="Your Name" bind:value={username}>
+                            <input class="form-control form-control-lg" type="text" required placeholder="Your Name" bind:value={name}>
                         </div>
                         <div class="mt-2 form-group">
-                            <input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
+                            <input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={username}>
                         </div>
                         <div class="mt-2 form-group">
                             <input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
